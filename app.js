@@ -1,20 +1,34 @@
  var btntranslate = document.querySelector("#btn-translate");
- var textoinput = document.querySelector("#texto-input");
- var outputval = document.querySelector("#output")
-
- console.log(outputval)
+ let texttoinput = document.querySelector("#texto-input");
+ var outputval = document.querySelector("#output");
 
 
+ let serverURL = "https://api.funtranslations.com/translate/minion.json"
 
- function clickity(){
-    console.log("clock")
-    console.log("inpput",textoinput.value)
- }    
-function bananalate() {
-    outputval.innerText=("bellow"+textoinput.value)
+ const setserverURL = (text) => {
+    
+    return setURL= serverURL+"?"+"text="+text
+        
+ }
+
+ const errorHandle = (error) => {
+    console.log("error occured bro", error);
+    alert("Error occured")
+ }
+
+ const getserverURL = () => {
+    let textinput = texttoinput.value;
+    fetch(setserverURL(textinput))
+    .then(response => response.json())
+    .then(json => { 
+        let translation = json.contents.translated;
+        outputval.innerText = translation;
+    })
+    .catch(errorHandle)
 }
 
- btntranslate.addEventListener("click", bananalate)
+
+ btntranslate.addEventListener("click", getserverURL)
 
  
 
